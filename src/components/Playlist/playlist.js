@@ -3,10 +3,10 @@ import TrackList from '../TrackList/tracklist';
 import './playlist.css';
  const PlayList = function(){
      return(
-         <div class="Playlist">
+         <div className="Playlist">
      <input value="New Playlist"/>
      <TrackList/>
-      <button class="Playlist-save">SAVE TO SPOTIFY</button>
+      <button className="Playlist-save">SAVE TO SPOTIFY</button>
    </div>)
  }
  export default PlayList;
