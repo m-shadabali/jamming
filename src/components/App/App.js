@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import SearchBar from '../SearchBar/searchbar';
-import SearchResult from '../SearchResult/searchresult';
+import SearchResults from '../SearchResults/searchresults';
 import PlayList from '../Playlist/playlist';
  class App extends React.Component {
    constructor(props) {
@@ -20,8 +20,8 @@ import PlayList from '../Playlist/playlist';
       <div class="App">
            <SearchBar/>
          <div class="App-playlist">
-         <SearchResult searchResults = {this.state.serchResults}/>
-          <PlayList name = {this.state.name} playlist = {this.state.playlistTracks}/>
+         <SearchResults searchResults = {this.state.serchResults} />
+          <PlayList name = {this.state.playlistName} playlist = {this.state.playlistTracks}/>
          </div>
       </div>
     </div>

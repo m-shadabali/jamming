@@ -1,9 +1,9 @@
 import React from 'react';
 import TrackList from '../TrackList/tracklist';
-import './searchresult.css';
+import './searchresults.css';
 
 
-class SearchResult extends React.Component{
+class SearchResults extends React.Component{
 constructor(){
   super();
 }
@@ -18,4 +18,4 @@ constructor(){
   }
 }
     
-export default SearchResult;
+export default SearchResults;

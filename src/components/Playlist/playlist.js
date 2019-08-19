@@ -5,8 +5,7 @@ import './playlist.css';
      return(
          <div className="Playlist">
      <input value="New Playlist"/>
-     <p>{this.props.playlist}</p>
-     <TrackList playlist = {this.props.playlist}/>
+      <TrackList/>
       <button className="Playlist-save">SAVE TO SPOTIFY</button>
    </div>)
  }
