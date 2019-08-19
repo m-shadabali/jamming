@@ -3,17 +3,15 @@ import TrackList from '../TrackList/tracklist';
 import './searchresults.css';
 
 
-class SearchResults extends React.Component{
-constructor(){
-  super();
-}
-
-  render(){
+class SearchResults extends React.Component {
+ render(){
     return(
    <div className="SearchResults">
   <h2>Results</h2>
- <TrackList tracks = {this.props.searchResults} />
-</div>)
+ <TrackList tracks={this.props.SearchResults} />
+</div>
+
+)
 
   }
 }
