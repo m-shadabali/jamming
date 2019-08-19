@@ -1,12 +1,21 @@
 import React from 'react';
-import TrackList from '../Playlist/playlist';
+import TrackList from '../TrackList/tracklist';
 import './searchresult.css';
-const SearchReasult = function(){
-    return(
-        <div className="SearchResults">
-    <h2>Results</h2>
-    <TrackList/>
 
-  </div>)
+
+class SearchResult extends React.Component{
+constructor(){
+  super();
 }
-export default SearchReasult;
+
+  render(){
+    return(
+   <div className="SearchResults">
+  <h2>Results</h2>
+ <TrackList tracks = {this.props.searchResults} />
+</div>)
+
+  }
+}
+    
+export default SearchResult;
