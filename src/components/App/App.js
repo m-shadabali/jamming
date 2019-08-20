@@ -56,7 +56,7 @@ addTrack(track){
        <div>
       <h1>Ja<span className="highlight">mmm</span>ing</h1>
       <div className="App">
-           <SearchBar onSearch = {this.props.search}/>
+           <SearchBar onSearch = {this.search}/>
          <div className="App-playlist">
          <SearchResults searchResults = {this.state.serchResults} onAdd = {this.addTrack}/>
 
