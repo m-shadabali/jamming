@@ -21,6 +21,7 @@ constructor(props) {
   removeTrack(){
     this.props.onRemove(this.props.track)
   }
+  
   render(){
     return (
       

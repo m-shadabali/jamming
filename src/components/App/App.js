@@ -19,6 +19,9 @@ import PlayList from '../Playlist/playlist';
      };
      this.addTrack = this.addTrack.bind(this);
      this.removeTrack = this.removeTrack.bind(this);
+     this.updatePlayListName = this.updatePlayListName.bind(this);
+     this.savePlaylist = this.savePlaylist.bind(this);
+     this.search = this.search.bind(this);
 
     }
 addTrack(track){
@@ -39,17 +42,29 @@ addTrack(track){
      tracks = tracks.filter(currentTrack => currentTrack.id !== track.id)
      this.setState({playlistTracks: tracks});
    }
-
+   updatePlayListName(name){
+    this.setState({playlistName: name});
+  }
+  savePlaylist(){
+     const trackUris = this.state.playlistTracks.map(track => track.uri)
+  }
+  search(term){
+    console.log(term);
+  }
    render(){
      return (
        <div>
       <h1>Ja<span className="highlight">mmm</span>ing</h1>
       <div className="App">
-           <SearchBar/>
+           <SearchBar onSearch = {this.props.search}/>
          <div className="App-playlist">
          <SearchResults searchResults = {this.state.serchResults} onAdd = {this.addTrack}/>
 
-          <PlayList playlistName = {this.state.playlistName} playlistTracks = {this.state.playlistTracks} onRemove = {this.removeTrack}/>
+          <PlayList playlistName =  {this.state.playlistName} 
+          playlistTracks = {this.state.playlistTracks} 
+          onRemove = {this.removeTrack} 
+          onNameChange = {this.updatePlayListName}
+          onSave = {this.savePlaylist}/>
 
          </div>
       </div>
