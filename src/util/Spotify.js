@@ -1,6 +1,6 @@
 let accessToken;
 const clientId = "75f5c75bfe054ae78125bef918c51f69";
-const redirectUrl = window.location.href;
+const currentUrl = window.location.href;
 
 const Spotify = {
   getAccessToken() {
@@ -18,8 +18,9 @@ const Spotify = {
       window.history.pushState("Access Token", null, "/");
       return accessToken;
     } else {
-      const accessUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectUrl}`;
-      window.location = accessUrl;
+      window.location.href = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&scope=playlist-modify-public&redirect_uri=${currentUrl}`;
+      // const accessUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectUrl}`;
+      // window.location = accessUrl;      window.location.href = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&scope=playlist-modify-public&redirect_uri=${currentUrl}`;
     }
   },
   search(term) {
