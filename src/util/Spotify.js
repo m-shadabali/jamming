@@ -1,6 +1,6 @@
 let accessToken;
 const cliendId = "5213a859f908475a9ce07140a2da7905";
-const redirectUrl = "https://dashboard.heroku.com/apps/jammer-shadab/callback";
+const redirectUrl = "https://jammer-shadab.herokuapp.com/callback";
 
 const Spotify = {
   getAccessToken() {
