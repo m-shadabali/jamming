@@ -1,21 +1,22 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, {useState, useEffect} from 'react'
-import './SearchBar.css'
+import React, { useState, useEffect } from "react";
+import "./SearchBar.css";
 
 function SearchBar(props) {
-  const initialSearchTerm = () => String(window.localStorage.getItem('searchTerm') || "")
+  const initialSearchTerm = () =>
+    String(window.localStorage.getItem("searchTerm") || "");
   const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
 
   useEffect(() => {
-    window.localStorage.setItem('searchTerm', searchTerm);
-  }, [searchTerm])
+    window.localStorage.setItem("searchTerm", searchTerm);
+  }, [searchTerm]);
 
   async function handleSearch() {
     try {
-      await props.searchSpotify(searchTerm); 
+      await props.searchSpotify(searchTerm);
     } catch (error) {
-      console.warn(error)
-      const clientId = '0744a9d113234aed9830ca9b36b3be57';
+      console.warn(error);
+      const clientId = "75f5c75bfe054ae78125bef918c51f69";
       const currentUrl = window.location.href;
       window.location.href = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&scope=playlist-modify-public&redirect_uri=${currentUrl}`;
     }
@@ -28,15 +29,16 @@ function SearchBar(props) {
   }
 
   return (
-      <div className="SearchBar">
-      <input 
-        onChange={e => setSearchTerm(e.target.value)}
+    <div className="SearchBar">
+      <input
+        onChange={(e) => setSearchTerm(e.target.value)}
         onKeyPress={handleKeyPress}
         placeholder="Enter A Song Title"
-        value={searchTerm} />
+        value={searchTerm}
+      />
       <a onClick={handleSearch}>SEARCH</a>
     </div>
-  )
+  );
 }
 
 export default SearchBar;
