@@ -1,81 +1,67 @@
-import React from 'react';
-import './App.css';
-import SearchBar from '../SearchBar/searchbar';
-import SearchResults from '../SearchResults/searchresults';
-import PlayList from '../Playlist/playlist';
-import Spotify  from '../../util/Spotify';
- class App extends React.Component {
-   constructor(props) {
-     super(props);
-        this.state = {
-        serchResults: [],
-        playlistName: 'My Playlist',
-        playlistTracks: []
-       
-     };
-     this.addTrack = this.addTrack.bind(this);
-     this.removeTrack = this.removeTrack.bind(this);
-     this.updatePlayListName = this.updatePlayListName.bind(this);
-     this.savePlaylist = this.savePlaylist.bind(this);
-     this.search = this.search.bind(this);
+import React, { useState, useEffect } from "react";
+import "./App.css";
+import Spotify from "../../utils/Spotify";
+import SearchBar from "../SearchBar/SearchBar";
+import SearchResults from "../SearchResults/SearchResults";
+import Playlist from "../Playlist/Playlist";
 
-    }
-addTrack(track){
- let tracks = this.state.playlistTracks;
- if(tracks.find(savedTrack => savedTrack.id === track.id)){
-   return ;
- }
+function App() {
+  const [searchedTracks, setSearchedTracks] = useState([]);
+  const [playlistTracks, setPlaylistTracks] = useState([]);
+  const [spotifyToken, setSpotifyToken] = useState(null);
 
-   tracks.push(track);
-   this.setState({playlistTracks: tracks})
+  useEffect(() => {
+    const spotifyTokenFromUrlFragment = window.location.hash
+      .split("&")[0]
+      .substr(14);
+    setSpotifyToken(spotifyTokenFromUrlFragment);
+  }, []);
 
- 
-
-
-   }
-   removeTrack(track) {
-     let tracks = this.state.playlistTracks;
-     tracks = tracks.filter(currentTrack => currentTrack.id !== track.id)
-     this.setState({playlistTracks: tracks});
-   }
-   updatePlayListName(name){
-    this.setState({playlistName: name});
+  async function searchSpotify(searchTerms) {
+    const results = await Spotify.search(searchTerms, spotifyToken);
+    setSearchedTracks(results);
   }
-  savePlaylist(){
-    
-    const trackUris = this.state.playlistTracks.map(track => track.uri)
-      Spotify.savePlayList(this.state.playlistName, trackUris).then(() => {
-        this.setState({
-          playlistName: 'New Playlist',
-          playlistTracks: []
-        })
-      })
-  
+
+  async function createSpotifyPlaylist(name, trackIds) {
+    await Spotify.createPlaylist(name, trackIds, spotifyToken);
+    setPlaylistTracks([]);
   }
-  search(term){
-    Spotify.search(term).then(searchResults => {
-      this.setState({searchResults: searchResults})
-    })
-   }
-   render(){
-     return (
-       <div>
-      <h1>Ja<span className="highlight">mmm</span>ing</h1>
+
+  function addTrackToPlaylist(track) {
+    setPlaylistTracks((oldPlaylistTracks) => {
+      if (oldPlaylistTracks.includes(track)) {
+        return oldPlaylistTracks;
+      } else {
+        return [...oldPlaylistTracks, track];
+      }
+    });
+  }
+
+  function removeTrackFromPlaylist(track) {
+    setPlaylistTracks((oldPlaylistTracks) =>
+      oldPlaylistTracks.filter((t) => track !== t)
+    );
+  }
+
+  return (
+    <div>
+      <h1>Jammer</h1>
       <div className="App">
-           <SearchBar onSearch = {this.search}/>
-         <div className="App-playlist">
-         <SearchResults searchResults = {this.state.serchResults} onAdd = {this.addTrack}/>
-
-          <PlayList playlistName =  {this.state.playlistName} 
-          playlistTracks = {this.state.playlistTracks} 
-          onRemove = {this.removeTrack} 
-          onNameChange = {this.updatePlayListName}
-          onSave = {this.savePlaylist}/>
-
-         </div>
+        <SearchBar searchSpotify={searchSpotify} />
+        <div className="App-playlist">
+          <SearchResults
+            tracks={searchedTracks}
+            addTrackToPlaylist={addTrackToPlaylist}
+          />
+          <Playlist
+            tracks={playlistTracks}
+            removeTrackFromPlaylist={removeTrackFromPlaylist}
+            createSpotifyPlaylist={createSpotifyPlaylist}
+          />
+        </div>
       </div>
     </div>
-    )
-   }
- }
+  );
+}
+
 export default App;
